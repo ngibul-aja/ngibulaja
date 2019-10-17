@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import db from '@/config/firestore'
+import RemoteGame from '@/RemoteGame'
 
 Vue.use(Vuex)
 
@@ -13,6 +14,8 @@ export default new Vuex.Store({
       team2Name: '2'
     },
     cards: [],
+    remoteGameId: '',
+    remoteInviteId: '',
     team1Points: 0,
     team2Points: 0,
     roundNumber: 0,
@@ -27,6 +30,16 @@ export default new Vuex.Store({
   mutations: {
     setCards (state, payload) {
       state.cards = payload
+    },
+    setPlayers (state, payload) {
+      state.settings.team1Name = payload.firstTeamName
+      state.settings.team2Name = payload.secondTeamName
+      state.settings.timePerRound = payload.selectedTime
+      state.settings.maximumPoints = payload.selectedRound
+    },
+    newRemoteGame (state, payload) {
+      state.remoteGameId = payload.gameId
+      state.remoteInviteId = payload.inviteId
     }
   },
   actions: {
@@ -38,6 +51,22 @@ export default new Vuex.Store({
         })
         commit('setCards', cards)
       })
+    },
+    newGame ({ commit }, payload) {
+      console.log(payload, 'ini paylaod')
+      return new Promise((resolve, reject) => {
+        commit('setPlayers', payload)
+        RemoteGame.create(payload).then(res => {
+          console.log(res, 'asdf res')
+          commit('newRemoteGame', res)
+          resolve('hayo')
+        })
+      })
+    }
+  },
+  getters: {
+    inviteId: state => {
+      return state.remoteInviteId
     }
   },
   modules: {}
