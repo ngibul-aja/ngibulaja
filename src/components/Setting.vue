@@ -57,7 +57,7 @@ export default {
           console.log('Document written with ID: ', docRef.id)
         })
         .catch(err => {
-          console.log(err)
+          console.log('ini error', err)
         })
     }
   }
