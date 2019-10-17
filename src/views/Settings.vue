@@ -47,6 +47,7 @@
 <script>
 import db from '../config/firestore'
 import { mapState, mapActions, mapGetters } from 'vuex'
+import URI from 'urijs'
 
 export default {
   data: () => {
@@ -62,11 +63,11 @@ export default {
     ...mapState(['cards', 'settings']),
     ...mapGetters(['inviteId']),
     invitationUrl () {
-      return window.location.origin + `/?join=${this.inviteId}`
+      return window.location.origin + `/settings/?join=${this.inviteId}`
     }
   },
   methods: {
-    ...mapActions(['newGame']),
+    ...mapActions(['newGame', 'joinGame']),
     copyInvite () {
       this.$refs.inviteUrl.value
       document.execCommand('copy')
@@ -95,6 +96,16 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    }
+  },
+  mounted () {
+    let uri = URI(window.location.href)
+    const { join: gameId } = uri.query(true)
+    if (gameId) {
+      console.log('joining..')
+      this.joinGame(gameId).then(_ => {
+        console.log('joined')
+      })
     }
   }
 }

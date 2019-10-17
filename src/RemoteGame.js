@@ -60,11 +60,8 @@ RemoteGame.create = async function (payload) {
     firebase
       .auth()
       .signInAnonymously()
-      .then(() => RemoteGame.create({ size }))
+      .then(() => RemoteGame.create(payload))
   }
-
-  // let uid = firebase.auth().currentUser.uid
-  // let games = db.collection('games')
 
   const newGame = await db.collection('games').add({
     playerOne: payload.firstTeamName,
@@ -75,21 +72,35 @@ RemoteGame.create = async function (payload) {
   return Promise.resolve({ ...payload, gameId: key, inviteId: key })
 }
 
-RemoteGame.join = function ({ gameId }) {
+RemoteGame.join = async function (gameId) {
   if (!firebase.auth().currentUser) {
-    return promiseTry(() => firebase.auth().signInAnonymously()).then(() =>
-      RemoteGame.join({ gameId })
-    )
+    firebase
+      .auth()
+      .signInAnonymously()
+      .then(() => RemoteGame.join(gameId))
   }
 
-  let game = db.ref(`games/${gameId}`)
-  return promiseTry(() => game.update({ [WHITE]: firebase.auth().currentUser.uid }))
-    .then(() => game.once('value'))
-    .then(v => {
-      let { size, [WHITE]: white, [BLACK]: black } = v.val()
+  // const newGame = await db
+  //   .collection('games')
+  //   .doc(gameId)
+  //   .update({
+  //     playerTwo: firebase.auth().currentUser.id
+  //   })
+  // console.log('************')
+  // console.log({ gameId, newGame })
 
-      return { size, [WHITE]: white, [BLACK]: black, gameId: v.key }
-    })
+  // const key = newGame.id
+  // console.log('key', key)
+
+  // let game = db.ref(`games/${gameId}`)
+  // return promiseTry(() => game.update({ [WHITE]: firebase.auth().currentUser.uid }))
+  //   .then(() => game.once('value'))
+  //   .then(v => {
+  //     let { size, [WHITE]: white, [BLACK]: black } = v.val()
+
+  return Promise.resolve()
+  // return Promise.resolve({ ...newGame, gameId: newGame.id })
+  // })
 }
 
 export default RemoteGame

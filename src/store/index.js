@@ -40,6 +40,9 @@ export default new Vuex.Store({
     newRemoteGame (state, payload) {
       state.remoteGameId = payload.gameId
       state.remoteInviteId = payload.inviteId
+    },
+    joinRemoteGame (state, payload) {
+      state.remoteGameId = payload.gameId
     }
   },
   actions: {
@@ -59,7 +62,17 @@ export default new Vuex.Store({
         RemoteGame.create(payload).then(res => {
           console.log(res, 'asdf res')
           commit('newRemoteGame', res)
-          resolve('hayo')
+          resolve('new game')
+        })
+      })
+    },
+    joinGame ({ commit }, gameId) {
+      console.log('gameiddd wooooiii', gameId)
+      return new Promise((resolve, reject) => {
+        RemoteGame.join(gameId).then(res => {
+          console.log(res, 'joinigggg resss hereeee')
+          // commit('joinRemoteGame', res)
+          resolve('join game')
         })
       })
     }
