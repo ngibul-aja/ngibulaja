@@ -31,9 +31,8 @@ export default new Vuex.Store({
   },
   actions: {
     findAll ({ commit }) {
-      db.collection('tasks').onSnapshot(qS => {
+      db.collection('cards').onSnapshot(qS => {
         const cards = []
-        console.log(qS)
         qS.forEach(doc => {
           cards.push(doc.data())
         })
