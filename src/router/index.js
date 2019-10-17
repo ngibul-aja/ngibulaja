@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import VueBootsrap from 'bootstrap-vue'
 
 Vue.use(VueRouter)
+Vue.use(VueBootsrap)
 
 const routes = [
   {

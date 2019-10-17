@@ -3,6 +3,7 @@
     <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
     {{ cards }}
+    <Setting></Setting>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import { mapState, mapActions } from 'vuex'
+import Setting from '@/components/Setting.vue'
 
 export default {
   name: 'home',
@@ -17,7 +19,8 @@ export default {
     return {}
   },
   components: {
-    HelloWorld
+    HelloWorld,
+    Setting
   },
   computed: {
     ...mapState(['cards'])
