@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import db from '@/config/firestore'
 import RemoteGame from '@/RemoteGame'
-import promiseTry from 'es6-promise-try'
 
 Vue.use(Vuex)
 
