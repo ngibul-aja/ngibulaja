@@ -1,6 +1,8 @@
 <template>
   <div class="about">
-    <button @click="toMain" class="btn btn-primary w-75 py-5"><h1><strong>NEW GAME</strong></h1></button>
+    <button @click="toMain" class="btn btn-primary w-75 py-5">
+      <h1><strong>NEW GAME</strong></h1>
+    </button>
   </div>
 </template>
 
@@ -14,6 +16,4 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

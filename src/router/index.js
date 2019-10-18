@@ -1,13 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Settings from '@/views/Settings'
 import Main from '../views/Main.vue'
-import VueBootsrap from 'bootstrap-vue'
 
 Vue.use(VueRouter)
-Vue.use(VueBootsrap)
 
 const routes = [
+  {
+    path: '/settings',
+    name: 'settings',
+    component: Settings
+  },
   {
     path: '/',
     name: 'home',
