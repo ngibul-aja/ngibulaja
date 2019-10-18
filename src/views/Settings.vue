@@ -1,12 +1,6 @@
 <template>
-  <div class="container d-flex justify-content-center flex-wrap">
-    <!-- {{ cards }} -->
-    <br />
-    <br />
-    {{ settings }}
-    <br />
-    <br />
-    {{ game }}
+  <div class="container">
+  
     <form id="settings" v-if="showSetting" @submit.prevent="doNewGame">
       <div class="form-group">
         <h1>Settings</h1>
@@ -29,9 +23,9 @@
           </select>
         </div>
 
-        <div>
-          <div class="row d-flex justify-content-center mb-3">
-            <span class="mr-auto">First Team Name</span>
+        <div class="d-flex justify-content-center flex-wrap">
+          <div class="d-flex justify-content-center mb-3">
+            <span class="">First Team Name</span>
             <input
               class="form-control w-75"
               type="text"
@@ -40,8 +34,8 @@
               required
             />
           </div>
-          <div class="row d-flex justify-content-center mb-3">
-            <span class="mr-auto"> Second Team Name</span>
+          <div class="d-flex justify-content-center mb-3">
+            <span class=""> Second Team Name</span>
             <input
               class="form-control w-75"
               type="text"
@@ -59,8 +53,7 @@
       <input :value="invitationUrl" readonly ref="inviteUrl" />
       <button id="copy_invite" @click="copyInvite">copy</button>
     </div>
-    {{ inviteId }}
-    {{ invitationUrl }}
+
   </div>
 </template>
 
