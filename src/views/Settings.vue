@@ -26,9 +26,9 @@
           </select>
         </div>
 
-        <div>
-          <div class="row d-flex justify-content-center mb-3">
-            <span class="mr-auto">First Team Name</span>
+        <div class="d-flex justify-content-center flex-wrap">
+          <div class="d-flex justify-content-center mb-3">
+            <span class="">First Team Name</span>
             <input
               class="form-control w-75"
               type="text"
@@ -37,8 +37,8 @@
               required
             />
           </div>
-          <div class="row d-flex justify-content-center mb-3">
-            <span class="mr-auto"> Second Team Name</span>
+          <div class="d-flex justify-content-center mb-3">
+            <span class=""> Second Team Name</span>
             <input
               class="form-control w-75"
               type="text"

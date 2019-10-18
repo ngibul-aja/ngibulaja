@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import db from '@/config/firestore'
 import RemoteGame from '@/RemoteGame'
-import promiseTry from 'es6-promise-try'
 
 Vue.use(Vuex)
 
@@ -108,6 +107,7 @@ export default new Vuex.Store({
           commit('setOpponentIsJoined', true)
           localStorage.setItem('gameId', gameId)
           localStorage.setItem('timePerRound', this.state.settings.timePerRound)
+          localStorage.setItem('whoFirst', 0)
           resolve(res, 'joined game')
         })
       })
