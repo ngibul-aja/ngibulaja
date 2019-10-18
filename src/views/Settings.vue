@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-  
     <form id="settings" v-if="showSetting" @submit.prevent="doNewGame">
       <div class="form-group">
         <h1>Settings</h1>
@@ -124,4 +123,5 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+</style>

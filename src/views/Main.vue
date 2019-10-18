@@ -2,13 +2,13 @@
   <div>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4 justify-content-between">
       <div class="btn btn-primary">
-        NGIBUL 1 <span class="badge badge-light ml-2">{{ game.team1Points }}</span>
+        {{ game.team1Name }}<span class="badge badge-light ml-2">{{ game.team1Points }}</span>
       </div>
       <div>
-        <span class="text-white">20</span>
+        <span class="text-white">{{ game.timePerRound }}</span>
       </div>
       <div class="btn btn-primary">
-        NGIBUL 2 <span class="badge badge-light ml-2">{{ game.team2Points }}</span>
+        {{ game.team2Name }}<span class="badge badge-light ml-2">{{ game.team2Points }}</span>
       </div>
     </nav>
 
@@ -63,7 +63,7 @@ export default {
     ...mapActions(['joinGame', 'findAll', 'findGames']),
     addScore() {
       console.log(this.game)
-      const newGame = { ...this.game, id: localStorage.getItem('gameId') }
+      let newGame = { ...this.game, id: localStorage.getItem('gameId') }
       console.log(newGame, 'asdfasdf')
       this.$store.dispatch('addScore', newGame)
       this.next()
@@ -73,7 +73,9 @@ export default {
       this.next()
     },*/
     minScore() {
-      this.score--
+      let newGame = { ...this.game, id: localStorage.getItem('gameId') }
+      console.log(newGame, 'asdfasdf')
+      this.$store.dispatch('minScore', newGame)
       this.next()
     },
     next() {
