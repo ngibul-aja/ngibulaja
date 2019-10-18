@@ -65,7 +65,9 @@ RemoteGame.create = async function (payload) {
 
   const newGame = await db.collection('games').add({
     playerOne: payload.firstTeamName,
-    playerTwo: payload.secondTeamName
+    playerTwo: payload.secondTeamName,
+    timePerRound: payload.selectedTime,
+    maximumPoints: payload.selectedRound
   })
   const key = newGame.id
 
