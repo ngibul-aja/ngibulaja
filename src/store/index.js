@@ -105,6 +105,7 @@ export default new Vuex.Store({
           // commit('joinRemoteGame', res)
           commit('setOpponentIsJoined', true)
           localStorage.setItem('gameId', gameId)
+          localStorage.setItem('whoFirst', 0)
           resolve(res, 'joined game')
         })
       })
