@@ -1,35 +1,30 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-    {{ cards }}
-    <Setting></Setting>
+  <div class="about">
+    <h1>This is an about page</h1>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import { mapState, mapActions } from 'vuex'
-import Setting from '@/components/Setting.vue'
+import URI from 'urijs'
+import { mapActions } from 'vuex'
 
 export default {
-  name: 'home',
-  data () {
-    return {}
-  },
-  components: {
-    HelloWorld,
-    Setting
-  },
-  computed: {
-    ...mapState(['cards'])
-  },
+  name: 'Home',
   methods: {
-    ...mapActions(['findAll'])
+    ...mapActions(['joinGame'])
   },
   mounted () {
-    this.findAll()
+    let uri = URI(window.location.href)
+    console.log(uri)
+    console.log(window.location.href)
+    const { join: gameId } = uri.query(true)
+    console.log(gameId, 'gamiddddddddddddddddddddd')
+    if (gameId) {
+      console.log('joining..')
+      this.joinGame(gameId).then(_ => {
+        console.log('joined')
+      })
+    }
   }
 }
 </script>

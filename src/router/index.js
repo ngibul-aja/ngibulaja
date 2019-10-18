@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import VueBootsrap from 'bootstrap-vue'
+import Settings from '@/views/Settings'
+import Main from '../views/Main.vue'
 
 Vue.use(VueRouter)
-Vue.use(VueBootsrap)
 
 const routes = [
+  {
+    path: '/settings',
+    name: 'settings',
+    component: Settings
+  },
   {
     path: '/',
     name: 'home',
@@ -19,6 +24,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/main',
+    name: 'main',
+    component: Main
   }
 ]
 
