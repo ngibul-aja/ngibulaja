@@ -13,6 +13,7 @@
     "bootstrap-vue": "^2.0.4",
     "core-js": "^3.1.2",
     "firebase": "^7.2.1",
+    "sweetalert2": "^8.18.4",
     "urijs": "^1.19.1",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
@@ -55,5 +56,4 @@
     "> 1%",
     "last 2 versions"
   ]
-  }
 }

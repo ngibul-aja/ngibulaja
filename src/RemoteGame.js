@@ -2,7 +2,7 @@ import firebase from 'firebase/app'
 import db from '@/config/firestore'
 
 class RemoteGame {
-  constructor (store) {
+  constructor(store) {
     this.store = store
     let gameId = store.state.remoteGameId
 
@@ -55,7 +55,7 @@ class RemoteGame {
   }
 }
 
-RemoteGame.create = async function (payload) {
+RemoteGame.create = async function(payload) {
   if (!firebase.auth().currentUser) {
     firebase
       .auth()
@@ -67,14 +67,17 @@ RemoteGame.create = async function (payload) {
     playerOne: payload.firstTeamName,
     playerTwo: payload.secondTeamName,
     timePerRound: payload.selectedTime,
-    maximumPoints: payload.selectedRound
+    maximumPoints: payload.selectedRound,
+    team1Points: 0,
+    team2Points: 0,
+    whomTurn: 1
   })
   const key = newGame.id
 
   return Promise.resolve({ ...payload, gameId: key, inviteId: key })
 }
 
-RemoteGame.join = async function (gameId) {
+RemoteGame.join = async function(gameId) {
   if (!firebase.auth().currentUser) {
     firebase
       .auth()
