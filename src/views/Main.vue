@@ -94,6 +94,14 @@ export default {
   },
   mounted() {
     this.findAll()
+    let interval = setInterval(() => {
+      this.game.timePerRound--
+      if(this.game.timePerRound < 1) {
+        this.game.whomTurn = 2
+        clearInterval(interval)
+        this.game.timePerRound = localStorage.getItem("timePerRound")
+      }
+    }, 1000)
     let uri = URI(window.location.href)
     console.log(uri)
     console.log(window.location.href)
