@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import db from '@/config/firestore'
 import RemoteGame from '@/RemoteGame'
+import promiseTry from 'es6-promise-try'
 
 Vue.use(Vuex)
 
@@ -127,6 +128,38 @@ export default new Vuex.Store({
           })
       } else {
         game.team2Points++
+        db.collection('games')
+          .doc(game.id)
+          .update({
+            team2Points: game.team2Points
+          })
+          .then(_ => {
+            console.log('updated')
+            commit('setScore', game)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    },
+    minScore({ commit }, game) {
+      console.log(game)
+      if (game.whomTurn == 1) {
+        game.team1Points--
+        db.collection('games')
+          .doc(game.id)
+          .update({
+            team1Points: game.team1Points
+          })
+          .then(_ => {
+            console.log('updated')
+            commit('setScore', game)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        game.team2Points--
         db.collection('games')
           .doc(game.id)
           .update({

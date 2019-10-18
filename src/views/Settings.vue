@@ -1,6 +1,5 @@
 <template>
   <div class="container d-flex justify-content-center flex-wrap">
-    <!-- {{ cards }} -->
     <br />
     <br />
     {{ settings }}
@@ -131,4 +130,5 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+</style>
