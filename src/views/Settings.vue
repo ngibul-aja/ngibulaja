@@ -1,9 +1,12 @@
 <template>
   <div class="container d-flex justify-content-center flex-wrap">
-    {{ cards }}
+    <!-- {{ cards }} -->
     <br />
     <br />
     {{ settings }}
+    <br />
+    <br />
+    {{ game }}
     <form id="settings" v-if="showSetting" @submit.prevent="doNewGame">
       <div class="form-group">
       <h1>Settings</h1>
@@ -68,14 +71,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(['cards', 'settings']),
+    ...mapState(['cards', 'game', 'settings', 'opponentIsJoined']),
     ...mapGetters(['inviteId']),
     invitationUrl () {
-      return window.location.origin + `/settings/?join=${this.inviteId}`
+      return window.location.origin + `/?join=${this.inviteId}`
     }
   },
   methods: {
-    ...mapActions(['newGame', 'joinGame']),
+    ...mapActions(['newGame', 'joinGame', 'findAll', 'findGames']),
     copyInvite () {
       this.$refs.inviteUrl.value
       document.execCommand('copy')
@@ -87,32 +90,22 @@ export default {
         firstTeamName: this.firstTeamName,
         secondTeamName: this.secondTeamName
       }).then(res => {
-        console.log(res)
+        this.findGames(res.gameId)
       })
-    },
-    createGame () {
-      db.collection('settings')
-        .add({
-          selectedTime: this.selectedTime,
-          selectedRound: this.selectedRound,
-          firstTeamName: this.firstTeamName,
-          secondTeamName: this.secondTeamName
-        })
-        .then(function (docRef) {
-          console.log('Document written with ID: ', docRef.id)
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
   },
   mounted () {
     let uri = URI(window.location.href)
     const { join: gameId } = uri.query(true)
+    this.findGames(localStorage.getItem('gameId'))
+    this.findAll()
     if (gameId) {
       console.log('joining..')
       this.joinGame(gameId).then(_ => {
         console.log('joined')
+        if (this.opponentIsJoined) {
+          this.$router.push('/')
+        }
       })
     }
   }

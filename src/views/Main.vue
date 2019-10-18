@@ -1,18 +1,16 @@
 <template>
-    <div>
-        <Setting></Setting>
-    </div>
+  <div>
+    <!-- <Setting></Setting> -->
+  </div>
 </template>
 
 <script>
-import Setting from '@/components/Setting.vue'
+// import Setting from '@/components/Setting.vue'
 export default {
   components: {
-    Setting
+    // Setting
   }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
