@@ -40,7 +40,6 @@
       <button type="submit" class="btn btn-primary">Let's Start The Game !!!</button>
       </div>
 
-    
     </form>
 
     <div v-if="inviteId && invitationUrl">
