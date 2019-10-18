@@ -9,7 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     settings: {
-      timePerRound: 45000,
+      timePerRound: 45,
       maximumPoints: 10,
       team1Name: '1',
       team2Name: '2',

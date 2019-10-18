@@ -2,10 +2,8 @@
   <div class="container d-flex justify-content-center flex-wrap">
     <br />
     <br />
-    {{ settings }}
     <br />
     <br />
-    {{ game }}
     <form id="settings" v-if="showSetting" @submit.prevent="doNewGame">
       <div class="form-group">
         <h1>Settings</h1>
@@ -58,8 +56,6 @@
       <input :value="invitationUrl" readonly ref="inviteUrl" />
       <button id="copy_invite" @click="copyInvite">copy</button>
     </div>
-    {{ inviteId }}
-    {{ invitationUrl }}
   </div>
 </template>
 
