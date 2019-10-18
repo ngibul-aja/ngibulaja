@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import db from '@/config/firestore'
 import RemoteGame from '@/RemoteGame'
+import promiseTry from 'es6-promise-try'
 
 Vue.use(Vuex)
 
@@ -43,6 +44,12 @@ export default new Vuex.Store({
     },
     joinRemoteGame (state, payload) {
       state.remoteGameId = payload.gameId
+    },
+    remote_opponent_accepted (state, remoteInviteId) {
+      console.log(state, remoteInviteId)
+    },
+    join_remote_game (state, payload) {
+      state.remoteGameId = payload
     }
   },
   actions: {
@@ -68,17 +75,30 @@ export default new Vuex.Store({
     },
     joinGame ({ commit }, gameId) {
       console.log('gameiddd wooooiii', gameId)
-      return new Promise((resolve, reject) => {
-        RemoteGame.join(gameId).then(res => {
-          console.log(res, 'joinigggg resss hereeee')
-          // commit('joinRemoteGame', res)
-          resolve('join game')
-        })
+      console.log(RemoteGame)
+      return promiseTry(() => {
+        RemoteGame.join(gameId)
+          .then(g => {
+            console.log(g)
+            commit('join_remote_game', g)
+          })
       })
+      // return new Promise((resolve, reject) => {
+      //   RemoteGame.join({gameId}).then(res => {
+      //     console.log(res, 'joinigggg resss hereeee')
+      //     commit('join_remote_game', res)
+      //     resolve('join game')
+      //   })
+      // })
+    },
+    remoteOpponentAccepted ({ commit }, { remoteInviteId }) {
+      console.log('roa', remoteInviteId)
+      commit('remote_opponent_accepted', { remoteInviteId })
     }
   },
   getters: {
     inviteId: state => {
+      console.log('dari getters inviteid', state)
       return state.remoteInviteId
     }
   },

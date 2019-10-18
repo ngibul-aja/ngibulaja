@@ -48,6 +48,7 @@
 import db from '../config/firestore'
 import { mapState, mapActions, mapGetters } from 'vuex'
 import URI from 'urijs'
+import swal from 'sweetalert2'
 
 export default {
   data: () => {
@@ -67,9 +68,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['newGame', 'joinGame']),
+    ...mapActions(['newGame', 'joinGame', 'remote']),
     copyInvite () {
-      this.$refs.inviteUrl.value
       document.execCommand('copy')
     },
     doNewGame () {
@@ -80,6 +80,12 @@ export default {
         secondTeamName: this.secondTeamName
       }).then(res => {
         console.log(res)
+        swal.fire({
+          title: 'Loading Player',
+          text: `invite your friend: ${this.$refs.inviteUrl.value}`,
+          showConfirmButton: false,
+          allowOutsideClick: () => swal.isLoading()
+        })
       })
     },
     createGame () {
@@ -105,6 +111,8 @@ export default {
       console.log('joining..')
       this.joinGame(gameId).then(_ => {
         console.log('joined')
+        swal.close()
+        // this.$router.push('/setting')
       })
     }
   }
