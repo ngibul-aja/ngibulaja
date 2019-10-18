@@ -1,44 +1,47 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4 justify-content-between">
-      <div class="btn btn-primary">
-        {{ game.team1Name }}<span class="badge badge-light ml-2">{{ game.team1Points }}</span>
-      </div>
-      <div>
-        <span class="text-white">{{ game.timePerRound }}</span>
-      </div>
-      <div class="btn btn-primary">
-        {{ game.team2Name }}<span class="badge badge-light ml-2">{{ game.team2Points }}</span>
-      </div>
-    </nav>
+    <div>
+      {{ whoFirst }}
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4 justify-content-between">
+        <div class="btn btn-primary">
+          {{ game.team1Name }}<span class="badge badge-light ml-2">{{ game.team1Points }}</span>
+        </div>
+        <div>
+          <span class="text-white">{{ game.timePerRound }}</span>
+        </div>
+        <div class="btn btn-primary">
+          {{ game.team2Name }}<span class="badge badge-light ml-2">{{ game.team2Points }}</span>
+        </div>
+      </nav>
 
-    <section class="text-center">
-      <div class="container">
-        <h1 class="bg-secondary p-2 rounded text-white">{{ cards[randomNum].keyword }}</h1>
-      </div>
-      <div class="container justify-content-center">
-        <div v-for="(card, index) in cards[randomNum].values" :key="index">
-          <p class="lead text-danger">{{ card }}</p>
+      <section v-if="whosTheFirst" class="text-center">
+        <div class="container">
+          <h1 class="bg-secondary p-2 rounded text-white">{{ cards[randomNum].keyword }}</h1>
         </div>
-      </div>
-      <div class="container d-flex justify-content-center">
-        <div class="col">
-          <a @click="minScore" href="#" class="btn btn-danger my-2 w-75">
-            <img src="https://image.flaticon.com/icons/svg/126/126497.svg" alt="" width="70" />
-          </a>
+        <div class="container justify-content-center">
+          <div v-for="(card, index) in cards[randomNum].values" :key="index">
+            <p class="lead text-danger">{{ card }}</p>
+          </div>
         </div>
-        <div class="col">
-          <a @click="next" href="#" class="btn btn-info my-2 w-75">
-            <img src="https://image.flaticon.com/icons/svg/159/159695.svg" alt="" width="70" />
-          </a>
+        <div class="container d-flex justify-content-center">
+          <div class="col">
+            <a @click="minScore" href="#" class="btn btn-danger my-2 w-75">
+              <img src="https://image.flaticon.com/icons/svg/126/126497.svg" alt="" width="70" />
+            </a>
+          </div>
+          <div class="col">
+            <a @click="next" class="btn btn-info my-2 w-75">
+              <img src="https://image.flaticon.com/icons/svg/159/159695.svg" alt="" width="70" />
+            </a>
+          </div>
+          <div class="col">
+            <a @click="addScore" href="#" class="btn btn-success my-2 w-75">
+              <img src="https://image.flaticon.com/icons/svg/149/149148.svg" alt="" width="70" />
+            </a>
+          </div>
         </div>
-        <div class="col">
-          <a @click="addScore" href="#" class="btn btn-success my-2 w-75">
-            <img src="https://image.flaticon.com/icons/svg/149/149148.svg" alt="" width="70" />
-          </a>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -49,14 +52,21 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Main',
   computed: {
-    ...mapState(['cards', 'game'])
+    ...mapState(['cards', 'game']),
+    whosTheFirst() {
+      if (localStorage.getItem('whoFirst')) {
+        return false
+      }
+      return true
+    }
   },
   data() {
     return {
       //listCards: [],
       randomNum: Math.floor(Math.random() * 30),
-      score: 0
+      //score: 0,
       //whomTurn: this.game.whomTurn
+      whoFirst: localStorage.getItem('whoFirst')
     }
   },
   methods: {
