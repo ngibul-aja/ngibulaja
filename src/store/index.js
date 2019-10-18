@@ -21,10 +21,11 @@ export default new Vuex.Store({
       timePerRound: 0,
       maximumPoints: 0,
       team1Name: '',
-      team2Name: ''
+      team2Name: '',
+      team1Points: 0,
+      team2Points: 0,
+      whomTurn: 1
     },
-    team1Points: 0,
-    team2Points: 0,
     roundNumber: 0,
     whomTurn: 1,
     opponentIsJoined: false,
@@ -36,35 +37,42 @@ export default new Vuex.Store({
     winner: null
   },
   mutations: {
-    setCards (state, payload) {
+    setCards(state, payload) {
       state.cards = payload
     },
-    setPlayers (state, payload) {
+    setPlayers(state, payload) {
       state.settings.team1Name = payload.firstTeamName
       state.settings.team2Name = payload.secondTeamName
       state.settings.timePerRound = payload.selectedTime
       state.settings.maximumPoints = payload.selectedRound
     },
-    newRemoteGame (state, payload) {
+    newRemoteGame(state, payload) {
       state.settings.remoteGameId = payload.gameId
       state.settings.remoteInviteId = payload.inviteId
     },
-    joinRemoteGame (state, payload) {
+    joinRemoteGame(state, payload) {
       state.remoteGameId = payload.gameId
     },
-    setOpponentIsJoined (state, payload) {
+    setOpponentIsJoined(state, payload) {
       state.opponentIsJoined = payload
     },
-    setGames (state, payload) {
+    setGames(state, payload) {
       // state.game = payload
       state.game.team1Name = payload.playerOne
       state.game.team2Name = payload.playerTwo
       state.game.timePerRound = payload.timePerRound
       state.game.maximumPoints = payload.maximumPoints
+      state.game.team1Points = payload.team1Points
+      state.game.team2Points = payload.team2Points
+      state.game.whomTurn = payload.whomTurn
+    },
+    setScore(state, payload) {
+      console.log(payload, '&&&&&&&&&&&&&&&&&&&&&&&&')
+      state.game = payload
     }
   },
   actions: {
-    findAll ({ commit }) {
+    findAll({ commit }) {
       db.collection('cards').onSnapshot(qS => {
         const cards = []
         qS.forEach(doc => {
@@ -73,21 +81,17 @@ export default new Vuex.Store({
         commit('setCards', cards)
       })
     },
-    findGames ({ commit, state }, payload) {
-      console.log(payload, 'asdferppp')
+    findGames({ commit, state }, payload) {
       db.collection('games')
         .doc(payload)
         .onSnapshot(doc => {
-          console.log('qssssss', doc.data())
           const data = doc.data()
           commit('setGames', data)
         })
     },
-    newGame ({ commit }, payload) {
-      console.log(payload, 'ini paylaod')
+    newGame({ commit }, payload) {
       return new Promise((resolve, reject) => {
         RemoteGame.create(payload).then(res => {
-          console.log(res, 'asdf res')
           commit('setPlayers', payload)
           commit('newRemoteGame', res)
           localStorage.setItem('gameId', res.gameId)
@@ -95,18 +99,47 @@ export default new Vuex.Store({
         })
       })
     },
-    joinGame ({ commit }, gameId) {
-      console.log('gameiddd wooooiii', gameId)
+    joinGame({ commit }, gameId) {
       return new Promise((resolve, reject) => {
         RemoteGame.join(gameId).then(res => {
-          console.log(res, 'joinigggg resss hereeee')
           // commit('joinRemoteGame', res)
           commit('setOpponentIsJoined', true)
-          console.log(res, 'zzzzzzzzzzzzzzzzzzzzzz')
           localStorage.setItem('gameId', gameId)
           resolve(res, 'joined game')
         })
       })
+    },
+    addScore({ commit }, game) {
+      console.log(game)
+      if (game.whomTurn == 1) {
+        game.team1Points++
+        db.collection('games')
+          .doc(game.id)
+          .update({
+            team1Points: game.team1Points
+          })
+          .then(_ => {
+            console.log('updated')
+            commit('setScore', game)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        game.team2Points++
+        db.collection('games')
+          .doc(game.id)
+          .update({
+            team2Points: game.team2Points
+          })
+          .then(_ => {
+            console.log('updated')
+            commit('setScore', game)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     }
   },
   getters: {
