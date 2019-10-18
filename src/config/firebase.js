@@ -11,9 +11,6 @@ firebase.initializeApp({
   storageBucket: 'ngibulaja-4acc7.appspot.com',
   messagingSenderId: '378855200674',
   appId: '1:378855200674:web:1a8695e8a171868d9304fb'
-  // apiKey: 'AIzaSyDqkiXCq-yTQYzHCP-SkjQCQvTmvGiHpCA',
-  // authDomain: 'kanban-d99f9.firebaseapp.com',
-  // projectId: 'kanban-d99f9'
 })
 
 module.exports = firebase
