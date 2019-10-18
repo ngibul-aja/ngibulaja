@@ -5,14 +5,14 @@
         NGIBUL 1 <span class="badge badge-light ml-2">{{ game.team1Points }}</span>
       </div>
       <div>
-        <span class="text-white">20</span>
+        <!-- <span class="text-white">20</span> -->
       </div>
       <div class="btn btn-primary">
         NGIBUL 2 <span class="badge badge-light ml-2">{{ game.team2Points }}</span>
       </div>
     </nav>
 
-    <section class="text-center">
+    <section v-if="game.whomTurn" class="text-center">
       <div class="container">
         <h1 class="bg-secondary p-2 rounded text-white">{{ cards[randomNum].keyword }}</h1>
       </div>
@@ -54,8 +54,8 @@ export default {
   data() {
     return {
       //listCards: [],
-      randomNum: Math.floor(Math.random() * 30),
-      score: 0
+      randomNum: Math.floor(Math.random() * 30)
+      //score: 0,
       //whomTurn: this.game.whomTurn
     }
   },
